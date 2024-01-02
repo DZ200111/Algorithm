@@ -2,33 +2,36 @@
 
 #define BUFFER_SIZE 7
 
-int selectsort(int array[])
+/*选择排序:相较于冒泡排序减少了交换的次数*/
+int selectsort(int *array, int length)
 {
-    int tmp = 0;
-    int med = 0;
-    for(int index = 0; index < BUFFER_SIZE - 1; index++)
+  int minValue = 0;
+  int minIndex = 0;
+  for(int pos = 0; pos < length; pos++)
+  {
+    minValue = array[pos];
+    for(int begin = pos + 1; begin < length; begin++)
     {
-        tmp = index;
-        for(int jndex = tmp + 1; jndex < BUFFER_SIZE; jndex++)
+        if(minValue > array[begin])
         {
-             if(array[jndex] < array[tmp])
-             {
-                tmp = jndex;
-             }
-        }
-        if(array[index] > array[tmp])
-        {
-            med = array[index];
-            array[index] = array[tmp];
-            array[tmp] = med;
+            minValue = array[begin];
+            minIndex = begin;
         }
     }
+    if(array[pos] > minValue)
+    {
+        int temp = array[pos];
+        array[pos] = minValue;
+        array[minIndex] = temp;
+    }
+  }
 }
 
 int main()
 {
     int array[BUFFER_SIZE] = {1,30,24,5,58,12,39};
-    selectsort(array);
+    int length = sizeof(array) / sizeof(array[0]);
+    selectsort(array, length);
     for(int index = 0; index < BUFFER_SIZE; index++)
     {
         printf("%d\t", array[index]);
